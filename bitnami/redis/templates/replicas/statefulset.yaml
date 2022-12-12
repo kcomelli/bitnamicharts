@@ -368,6 +368,10 @@ spec:
           {{- if .Values.volumePermissions.resources }}
           resources: {{- toYaml .Values.volumePermissions.resources | nindent 12 }}
           {{- end }}
+          {{- if .Values.replica.extraEnvVars }}
+          env:
+            {{- include "common.tplvalues.render" (dict "value" .Values.replica.extraEnvVars "context" $) | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: redis-data
               mountPath: {{ .Values.replica.persistence.path }}
